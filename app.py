@@ -958,10 +958,18 @@ if ml_results:
         ticker = f"KXNFLGAME-{date_str}{away_code}{home_code}"
         this_url = f"https://kalshi.com/markets/KXNFLGAME/{ticker}"
         
+        # Format game date/time
+        if r["game_date"]:
+            game_dt = r["game_date"].astimezone(eastern)
+            game_time_str = game_dt.strftime("%a %b %d • %I:%M %p ET")
+        else:
+            game_time_str = ""
+        
         st.markdown(f"""<div style="background:linear-gradient(135deg,#0f172a,#020617);padding:8px 12px;margin-bottom:2px;border-radius:6px;border-left:3px solid {r['color']}">
         <b style="color:#fff">{pick_team}</b> <span style="color:#666">vs {opponent}</span> 
         <span style="color:#38bdf8">{r['score']}/10</span> 
-        <span style="color:#777;font-size:0.8em">{reasons_str}</span></div>""", unsafe_allow_html=True)
+        <span style="color:#777;font-size:0.8em">{reasons_str}</span>
+        <div style="color:#888;font-size:0.75em;margin-top:4px">📅 {game_time_str}</div></div>""", unsafe_allow_html=True)
         
         st.link_button(f"BUY {pick_code}", this_url, use_container_width=True)
 else:
